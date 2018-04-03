@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+
+	<chain name="exporterChain">
+		<command name="consoleExporter" className="net.ddns.lnhc.qrmaze.export.ConsoleExporter"></command>
+		<command name="scrExporter" className="net.ddns.lnhc.qrmaze.export.AutocadScrExporter"></command>
+		<command name="pgnExporter" className="net.ddns.lnhc.qrmaze.export.PngExporter"></command>
+		<command name="extrudeExporter" className="net.ddns.lnhc.qrmaze.export.ExtrudeExporter"></command>
+		<command name="svgExporter" className="net.ddns.lnhc.qrmaze.export.SvgExporter"></command>
+	</chain>
+
+</catalog>
