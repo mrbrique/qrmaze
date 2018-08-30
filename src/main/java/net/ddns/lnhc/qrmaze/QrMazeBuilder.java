@@ -72,7 +72,7 @@ public class QrMazeBuilder {
 
 	}
 
-	public void build(String s, final int qrVersion) {
+	public BitMatrix prepare(String s, final int qrVersion) {
 		QRCodeWriter writer = new QRCodeWriter();
 		Map<EncodeHintType, Object> hintMap = new HashMap<EncodeHintType, Object>() {
 			{
@@ -83,8 +83,19 @@ public class QrMazeBuilder {
 
 			}
 		};
+
 		try {
-			BitMatrix matrix = writer.encode(s, BarcodeFormat.QR_CODE, DIMENSION, DIMENSION, hintMap);
+			return writer.encode(s, BarcodeFormat.QR_CODE, DIMENSION, DIMENSION, hintMap);
+		} catch (WriterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void build(String s, final int qrVersion) {
+		try {
+			BitMatrix matrix = prepare(s, qrVersion);
 			exporterChain.execute(createChainContext(matrix));
 		} catch (WriterException e) {
 			// TODO Auto-generated catch block
