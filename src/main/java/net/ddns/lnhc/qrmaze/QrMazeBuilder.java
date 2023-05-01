@@ -1,13 +1,6 @@
 package net.ddns.lnhc.qrmaze;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.chain.Catalog;
@@ -26,12 +19,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-
-import net.ddns.lnhc.qrmaze.export.AutocadScrExporter;
-import net.ddns.lnhc.qrmaze.export.ConsoleExporter;
-import net.ddns.lnhc.qrmaze.export.ExtrudeExporter;
-import net.ddns.lnhc.qrmaze.export.PngExporter;
-import net.ddns.lnhc.qrmaze.export.QrMazeExporter;
 
 /**
  * Hello world!
