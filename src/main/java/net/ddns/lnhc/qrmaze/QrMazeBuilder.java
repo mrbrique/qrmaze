@@ -1,6 +1,5 @@
 package net.ddns.lnhc.qrmaze;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.chain.Catalog;
@@ -18,7 +17,6 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 /**
  * Hello world!
@@ -40,8 +38,7 @@ public class QrMazeBuilder {
 			e.printStackTrace();
 		}
 
-		String qrVersion = cmd.getOptionValue(OptionsFactory.ARGUMENT_VERSION);
-		new QrMazeBuilder().build(cmd.getArgs()[0], (qrVersion == null) ? -1 : Integer.parseInt(qrVersion));
+		new QrMazeBuilder().build(cmd.getArgs()[0], cmd);
 	}
 
 	public QrMazeBuilder() {
@@ -59,20 +56,11 @@ public class QrMazeBuilder {
 
 	}
 
-	public BitMatrix prepare(String s, final int qrVersion) {
+	public BitMatrix prepare(String content, Map<EncodeHintType, ?> hintMap) {
 		QRCodeWriter writer = new QRCodeWriter();
-		Map<EncodeHintType, Object> hintMap = new HashMap<EncodeHintType, Object>() {
-			{
-				put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-				if (qrVersion > 0) {
-					put(EncodeHintType.QR_VERSION, qrVersion);
-				}
-
-			}
-		};
 
 		try {
-			return writer.encode(s, BarcodeFormat.QR_CODE, DIMENSION, DIMENSION, hintMap);
+			return writer.encode(content, BarcodeFormat.QR_CODE, DIMENSION, DIMENSION, hintMap);
 		} catch (WriterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,9 +68,10 @@ public class QrMazeBuilder {
 		return null;
 	}
 
-	public void build(String s, final int qrVersion) {
+	public void build(String s, CommandLine cmd) {
+
 		try {
-			BitMatrix matrix = prepare(s, qrVersion);
+			BitMatrix matrix = prepare(s, new EncodeHintBuilder(cmd).build());
 			exporterChain.execute(createChainContext(matrix));
 		} catch (WriterException e) {
 			// TODO Auto-generated catch block
